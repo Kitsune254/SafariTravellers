@@ -1,0 +1,143 @@
+﻿{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="hero-section" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{% static 'bus.jpg' %}'); background-size: cover; background-position: center; background-repeat: no-repeat; min-height: 90vh; width: 100%; display: flex; justify-content: center; align-items: center;">
+
+    <div class="booking-card">
+        <div class="booking-card">
+            <h2 class="booking-title">Book Your Journey</h2>
+            <form id="bookingForm">
+
+                <div class="form-group">
+                    <label for="route">Route</label>
+                    <select id="route" name="route" required>
+                        <option value="" disabled selected>-- Select Route --</option>
+                        <option>Nairobi → Mombasa</option>
+                        <option>Nairobi → Kisumu</option>
+                        <option>Nairobi → Nakuru</option>V
+                        <option>Mombasa → Nairobi</option>
+                        <option>Kisumu → Nairobi</option>
+                        <option>Nakuru → Nairobi</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="travel-date">Travel Date</label>
+                    <div class="date-wrapper">
+                        <span class="cal-icon">📅</span>
+                        <input type="date" id="travel-date" name="travel_date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="departure-time">Departure Time</label>
+                    <select id="departure-time" name="departure_time" required>
+                        <option value="" disabled selected>-- Select Time --</option>
+                        <option>07:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>02:00 PM</option>
+                        <option>06:00 PM</option>
+                        <option>09:00 PM</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Bus Seat</label>
+                    <button type="button" class="seat-btn" id="openSeatModal">
+                        <span class="seat-icon">🪑</span>
+                        <span id="seatBtnText">-- Choose Your Seat --</span>
+                    </button>
+                    <input type="hidden" id="selected-seat" name="seat" required>
+                </div>
+
+                <div id="costDisplay" class="cost-display" style="display:none;"></div>
+
+                <button type="submit" class="book-btn">Book Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Seat Selection Modal -->
+    <div class="seat-modal-overlay" id="seatModal">
+        <div class="seat-modal">
+            <div class="seat-modal-header">
+                <h3>Select Your Seat</h3>
+                <button class="close-modal" id="closeSeatModal">&times;</button>
+            </div>
+
+            <div class="seat-legend">
+                <div class="legend-item"><div class="legend-box available"></div> Available</div>
+                <div class="legend-item"><div class="legend-box vip-box"></div> VIP</div>
+                <div class="legend-item"><div class="legend-box selected"></div> Selected</div>
+                <div class="legend-item"><div class="legend-box taken"></div> Taken</div>
+            </div>
+
+            <div class="bus-container">
+                <div class="bus-body">
+
+                    <!-- Bus front -->
+                    <div class="bus-front">
+                        <div class="steering-wheel">🚌</div>
+                        <div class="driver-label">Driver</div>
+                    </div>
+
+                    <div class="seat-area">
+                        <div class="seat-row header-row">
+                            <div class="col-label">A</div>
+                            <div class="col-label">B</div>
+                            <div class="aisle-gap"></div>
+                            <div class="col-label">C</div>
+                            <div class="col-label">D</div>
+                        </div>
+
+                        {% for row in rows %}
+                        {% if row.section %}
+                        <div class="{% if row.is_vip %}vip-label{% else %}standard-label{% endif %}">
+                            {% if row.is_vip %}⭐ {% endif %}{{ row.section }}
+                        </div>
+                        {% endif %}
+
+                        <div class="seat-row">
+                            <div class="seat {% if row.is_vip %}vip {% endif %}{% if row.seats.a.taken %}taken{% else %}available{% endif %}"
+                                 data-seat="{{ row.seats.a.num }}"
+                                 {% if not row.seats.a.taken %}onclick="selectSeat(this)" {% endif %}>{{ row.seats.a.num }}</div>
+
+                            <div class="seat {% if row.is_vip %}vip {% endif %}{% if row.seats.b.taken %}taken{% else %}available{% endif %}"
+                                 data-seat="{{ row.seats.b.num }}"
+                                 {% if not row.seats.b.taken %}onclick="selectSeat(this)" {% endif %}>{{ row.seats.b.num }}</div>
+
+                            <div class="aisle-gap">{{ row.number }}</div>
+
+                            <div class="seat {% if row.is_vip %}vip {% endif %}{% if row.seats.c.taken %}taken{% else %}available{% endif %}"
+                                 data-seat="{{ row.seats.c.num }}"
+                                 {% if not row.seats.c.taken %}onclick="selectSeat(this)" {% endif %}>{{ row.seats.c.num }}</div>
+
+                            <div class="seat {% if row.is_vip %}vip {% endif %}{% if row.seats.d.taken %}taken{% else %}available{% endif %}"
+                                 data-seat="{{ row.seats.d.num }}"
+                                 {% if not row.seats.d.taken %}onclick="selectSeat(this)" {% endif %}>{{ row.seats.d.num }}</div>
+                        </div>
+                        {% endfor %}
+
+                        <div class="seat-row back-row">
+                            {% for seat in back_row %}
+                            <div class="seat {% if seat.taken %}taken{% else %}available{% endif %}"
+                                 data-seat="{{ seat.num }}"
+                                 {% if not seat.taken %}onclick="selectSeat(this)" {% endif %}>{{ seat.num }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+
+                    <div class="seat-modal-footer">
+                        <p id="selectedSeatInfo">No seat selected</p>
+                        <button class="confirm-seat-btn" id="confirmSeat" disabled>Confirm Seat</button>
+                    </div>
+                </div>
+            </div>
+
+            <script src="{% static 'js/script.js' %}"></script>
+
+            {% endblock %}

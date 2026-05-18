@@ -1,0 +1,184 @@
+﻿{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<head>
+  
+    <style>
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+        }
+
+        .star {
+              font-size: 10vh;
+              cursor: pointer;
+        }
+
+        .one {
+              color: rgb(255, 0, 0);
+        }
+
+        .two {
+              color: rgb(255, 106, 0);
+        }
+
+        .three {
+              color: rgb(251, 255, 120);
+        }
+
+        .four {
+              color: rgb(255, 255, 0);
+        }
+
+        .five {
+              color: rgb(24, 159, 14);
+        }
+
+        #borderimg {
+            border: 15px solid transparent;
+            padding: 15px;
+            border-image: url("{% static 'Cute borders.jpg.jpeg' %}") 20 stretch;
+        }
+
+        #borderoutset {
+              background-color: darkslateblue;
+              border: 12px solid darkslateblue outset;
+              border-radius: 5px;
+              box-shadow: 8px 15px 20px rgba(0, 0, 0, 0.2);
+
+        }
+
+          .card {
+              background-color: transparent;
+              border: 12px solid transparent;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row align-items-center mt-5">
+            <div class="col-md-6 text-center">
+                <img src="{% static 'Bus Rental Pictures.jpg.jpeg' %}"alt="Safari Travellers Fleet"class="img-fluid"
+
+                     style="border-radius: 6px; box-shadow: 0 12px 28px rgba(0,0,0,0.12); width: 100%; max-width: 500px; height: auto;">
+            </div>
+
+            <div class="col-md-6">
+                <div style="border-radius: 10px; border: 1px medium #777; padding: 35px 30px; background-color: #fff; height: 50%;">
+                    <h1 style="font-size: 2.8rem; font-weight: 500; color: #000; margin-bottom: 20px; font-family: sans-serif;">About Us</h1>
+                    <p style="font-size: 1.1rem; line-height: 1.5; color: #333; margin-bottom: 0; font-family: sans-serif;">
+                        Safari Travellers Limited is a state of the art travel company meeting all your needs when it comes to transport.
+                        <br><br>
+                        From comfortable seating, to certified and experienced drivers, our goal is to provide seamless travel with style and comfort all while at an affordable pricing.
+                        <br><br>
+                        So what are you waiting for? Grab a ticket today and travel in comfort with us at Safari.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-sm-3" style="margin-left: 50px;" id="borderoutset">
+                <h1 style="color: white;">Our Mission</h1>
+                <p style="color: white;">Our mission is to provide our customers with a safe, comfortable, and affordable travel experience. We are committed to delivering exceptional service and ensuring that every journey with us is memorable and enjoyable.</p>
+            </div>
+            <div class="col-sm-3" style="margin-left: 50px;" id="borderoutset">
+                <h1 style="color: white;">Our Vision</h1>
+                <p style="color: white;">Our vision is to be the leading travel company in the industry, known for our commitment to excellence, innovation, and customer satisfaction. We aim to expand our services and reach more customers while maintaining our core values of safety, comfort, and affordability.</p>
+            </div>
+            <div class="col-sm-3" style="margin-left: 50px;" id="borderoutset">
+                <h1 style="color: white;">Our Numbers</h1>
+                <p style="color: white;">1000+ Satisfied Customers</p>
+                <p style="color: white;">20+ Routes Covered</p>
+                <p style="color: white;">10+ Buses in Fleet</p>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col" style="margin-left: 20px;" id="borderimg">
+                <p style="color:darkslateblue; text-align: center;"> Want to help us improve your experience? </p>
+                <p style="color: darkslateblue; text-align: center;">Leave us a review and let us know how we can serve you better.</p>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 20px; border-style: outset;">
+            <p style="font-size: large; text-align: center; color: darkslateblue;">How satisfied are you with our service?</p>
+        </div>
+
+        <div class="row" id="borderoutset" style="margin-top: 20px; margin-left: 20px; margin-right: 20px;">
+            <div class="col-sm-2">
+                <span onclick="starss(1)" class="star">★</span>
+            </div>
+
+            <div class="col-sm-2">
+                <span onclick="starss(2)" class="star">★</span>
+            </div>
+
+            <div class="col-sm-2">
+                <span onclick="starss(3)" class="star">★</span>
+            </div>
+
+            <div class="col-sm-2">
+                <span onclick="starss(4)" class="star">★</span>
+            </div>
+
+            <div class="col-sm-2">
+                <span onclick="starss(5)" class="star">★</span>
+            </div>
+
+        </div>
+
+        <div class="row mt-5">
+            <form>
+                <label for="reviews"> What can we do to improve your experience? </label>
+<textarea class="form-control" id="reviews" name="reviews" rows="5" cols="50" placeholder="Please share your feedback..."></textarea>
+                <button type="submit" class="btn btn-primary" style="background-color: darkslateblue; color:white; margin-top: 10px;">Submit</button>
+            </form>
+
+        </div>
+
+
+        <script>
+  let stars =
+      document.getElementsByClassName("star");
+
+  function starss(n) {
+    remove();
+    for (let i = 0; i < n; i++) {
+        if (n == 1) cls = "one";
+        else if (n == 2) cls = "two";
+        else if (n == 3) cls = "three";
+        else if (n == 4) cls = "four";
+        else if (n == 5) cls = "five";
+        stars[i].className = "star " + cls;
+       
+    }
+function remove() {
+    let i = 0;
+    while (i < 5) {
+        stars[i].className = "star";
+        i++;
+    }
+}
+   
+
+
+
+
+        </script>
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+{% endblock %}
