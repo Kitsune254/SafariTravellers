@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Safari Travellers{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <style>
 
         * {
@@ -78,7 +82,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 50px;
+            padding: 0px;
         }
 
 
@@ -116,7 +120,7 @@
 <body>
     <div class="logo-container">
 
-        <img src="C:\Users\Admin\OneDrive\Desktop\safari\1234.png" alt="Safari Travellers Logo" class="site-logo">
+        <img src="{% static 'logo.png' %}" alt="Safari Travellers Logo" class="site-logo">
 
         <header>
             <h1>Safari Travellers</h1>
@@ -128,9 +132,10 @@
 
     <nav>
         <ul>
-            <li><a href="{{ url_for('home') }}">Home </a></li>
-            <li><a href="{{ url_for('feedback') }}">Feedback</a></li>
-            <li><a href="{{ url_for('account') }}">Account</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'feedback' %}">Feedback</a></li>
+            <li><a href="{% url 'account' %}">Account</a></li>
+           
         </ul>
     </nav>
 
